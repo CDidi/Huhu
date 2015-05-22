@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Huhu</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="facebook_app_id">737493486370586</string>
+    <string name="facebook_connexion">Connexion avec Facebook</string>
+    <string name="ins_man">Inscription Manuelle</string>
+    <string name="info">Nous ne publierons rien sur votre mur</string>
+    <string name="myfile">filename</string>
+</resources>
