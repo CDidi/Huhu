@@ -131,20 +131,7 @@ public class MainActivity extends Activity {
                         User user2 = User.getUser(getApplicationContext());
                         user2.getUser();
 
-                        ImageView userpicture = (ImageView)findViewById(R.id.userpicture);
-                        URL img_value = null;
-                        try {
-                            img_value = new URL("http://graph.facebook.com/"+id+"/picture?type=large");
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();}
 
-                            Bitmap mIcon1 = null;
-                            try {
-                                mIcon1 = BitmapFactory.decodeStream(img_value.openConnection().getInputStream());
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            }
-                            userpicture.setImageBitmap(mIcon1);
                     }
 
                 }).executeAsync();
@@ -187,8 +174,20 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackmanager.onActivityResult(requestCode, resultCode, data);
+        ImageView userpicture = (ImageView)findViewById(R.id.userpicture);
+        URL img_value = null;
+        try {
+            img_value = new URL("http://graph.facebook.com/"+id+"/picture?type=large");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();}
 
-
+        Bitmap mIcon1 = null;
+        try {
+            mIcon1 = BitmapFactory.decodeStream(img_value.openConnection().getInputStream());
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        userpicture.setImageBitmap(mIcon1);
     }
 
 
