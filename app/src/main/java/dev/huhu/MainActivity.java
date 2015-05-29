@@ -2,10 +2,15 @@ package dev.huhu;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -20,6 +25,9 @@ import com.facebook.login.widget.LoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 
 
@@ -47,9 +55,6 @@ public class MainActivity extends Activity {
         callbackmanager = CallbackManager.Factory.create();
         loginbutton = (LoginButton) findViewById(R.id.login_button);
         loginbutton.setReadPermissions(Arrays.asList("public_profile", "email"));
-
-
-
         loginbutton.registerCallback(callbackmanager, new FacebookCallback<LoginResult>() {
 
             @Override
@@ -120,11 +125,26 @@ public class MainActivity extends Activity {
                             e.printStackTrace();
                         }
 
-                        User user = new User(id, nomcomplet, nom, prenom, sexe, mail, pays, timezone);
 
+                        User user = new User(id, nomcomplet, nom, prenom, sexe, mail, pays, timezone);
                         User.saveUser(user, getApplicationContext());
                         User user2 = User.getUser(getApplicationContext());
                         user2.getUser();
+
+                        ImageView userpicture = (ImageView)findViewById(R.id.userpicture);
+                        URL img_value = null;
+                        try {
+                            img_value = new URL("http://graph.facebook.com/"+id+"/picture?type=large");
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();}
+
+                            Bitmap mIcon1 = null;
+                            try {
+                                mIcon1 = BitmapFactory.decodeStream(img_value.openConnection().getInputStream());
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                            userpicture.setImageBitmap(mIcon1);
                     }
 
                 }).executeAsync();
@@ -141,6 +161,24 @@ public class MainActivity extends Activity {
 
             }
         });
+        Button but1 = (Button)findViewById(R.id.button);
+        but1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(MainActivity.this, InscriptionActivity.class);
+                startActivity(myIntent);
+            }
+        });
+
+        Button but2 = (Button)findViewById(R.id.button3);
+        but2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setContentView(R.layout.activity_imageview);
+            }
+        });
+
+
 
 
     }
@@ -149,6 +187,7 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackmanager.onActivityResult(requestCode, resultCode, data);
+
 
     }
 
@@ -175,6 +214,7 @@ public class MainActivity extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }

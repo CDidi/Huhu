@@ -8,4 +8,11 @@
     <string name="ins_man">Inscription Manuelle</string>
     <string name="info">Nous ne publierons rien sur votre mur</string>
     <string name="myfile">filename</string>
+    <string name="inscription">Inscription</string>
+    <string name="prenom">Prénom</string>
+    <string name="date_de_naissance">Date de naissance</string>
+    <string name="Email">Email</string>
+    <string name="Numero_mobile">Numéro de mobile</string>
+    <string name="message_confirmation">Vous recevrez un SMS de confirmation</string>
+    <string name="pays">Pays</string>
 </resources>
