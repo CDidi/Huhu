@@ -147,11 +147,11 @@
         android:textColor="#fffcfdff"
         android:background="#ff1be09d"
         android:gravity="center"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/textView6"
-        android:layout_alignEnd="@+id/textView6"
+        android:layout_below="@+id/spinner"
         android:layout_alignLeft="@+id/spinner"
-        android:layout_alignStart="@+id/spinner" />
+        android:layout_alignStart="@+id/spinner"
+        android:layout_alignRight="@+id/textView6"
+        android:layout_alignEnd="@+id/textView6" />
 
     <Spinner
         android:layout_width="wrap_content"

@@ -2,16 +2,16 @@ package dev.huhu;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -25,10 +25,8 @@ import com.facebook.login.widget.LoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Arrays;
+
 
 
 public class MainActivity extends Activity {
@@ -44,12 +42,32 @@ public class MainActivity extends Activity {
     String pays;
     String timezone;
     String datenaissance;
+    PagerAdapter mpa;
+    ViewPager vp;
+    String[] texttoshow;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         FacebookSdk.sdkInitialize(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        texttoshow = new String[]{"Découvrez des speakers natifs motivés pour échanger avec vous.","Matchez avec ceux qui vous plaisent.","Ayez des conversations passionnantes dans les langues que vous apprenez.","Le traducteur intégré est là pour vous aider."};
+
+        vp = (ViewPager) findViewById(R.id.view);
+        mpa = new ViewPagerAdapter(MainActivity.this,texttoshow);
+        vp.setAdapter(mpa);
+
+
+        AccessToken fb_token = AccessToken.getCurrentAccessToken();
+        if(fb_token != null) {
+            Intent intent3 = new Intent(MainActivity.this,SuccessLogin.class);
+            startActivity(intent3);
+
+        } else {
+
+        }
 
 
         callbackmanager = CallbackManager.Factory.create();
@@ -135,6 +153,7 @@ public class MainActivity extends Activity {
                     }
 
                 }).executeAsync();
+
             }
 
 
@@ -157,41 +176,17 @@ public class MainActivity extends Activity {
             }
         });
 
-        Button but2 = (Button)findViewById(R.id.button3);
-        but2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setContentView(R.layout.activity_imageview);
-            }
-        });
-
-
-
-
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackmanager.onActivityResult(requestCode, resultCode, data);
-        ImageView userpicture = (ImageView)findViewById(R.id.userpicture);
-        URL img_value = null;
-        try {
-            img_value = new URL("http://graph.facebook.com/"+id+"/picture?type=large");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();}
+        Intent intent2 = new Intent(MainActivity.this, SuccessLogin.class);
+        startActivity(intent2);
 
-        Bitmap mIcon1 = null;
-        try {
-            mIcon1 = BitmapFactory.decodeStream(img_value.openConnection().getInputStream());
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        userpicture.setImageBitmap(mIcon1);
+
     }
-
-
-
 
 
 
